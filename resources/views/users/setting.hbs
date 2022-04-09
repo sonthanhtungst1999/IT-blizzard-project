@@ -1,0 +1,299 @@
+{{> light-header}}
+
+<main class="main-account-setting container-fluid">
+    <div class="row">
+        <section class="main-sidebar-section  p-0">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link selected " id="v-pills-account-overview-tab" data-toggle="pill" href="#v-pills-account-overview" role="tab"
+                    aria-controls="v-pills-account-overview" aria-selected="true"><i class="fas fa-home"></i>Account Overview</a>
+                    <hr />
+                <a class="nav-link" id="v-pills-account-details-tab" data-toggle="pill" href="#v-pills-account-details" role="tab"
+                    aria-controls="v-pills-account-details" aria-selected="false"><i class="far fa-user"></i>Account Details</a>
+                <a class="nav-link" id="v-pills-games-subscriptions-tab" data-toggle="pill" href="#v-pills-games-subscriptions" role="tab"
+                    aria-controls="v-pills-games-subscriptions" aria-selected="false"><i class="fas fa-list-ul"></i>Games & Subscriptions</a>
+                <a class="nav-link" id="v-pills-parental-controls-tab" data-toggle="pill" href="#v-pills-parental-controls" role="tab"
+                aria-controls="v-pills-parental-controls" aria-selected="false"><i class="fas fa-user-friends"></i>Parental Controls</a>
+                    <hr />
+                <a class="nav-link" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab"
+                aria-controls="v-pills-security" aria-selected="false"><i class="fas fa-shield-alt"></i>Security</a>
+                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-privacy" role="tab"
+                aria-controls="v-pills-privacy" aria-selected="false"><i class="fas fa-lock"></i>Privacy</a>
+                <a class="nav-link" id="v-pills-connections-tab" data-toggle="pill" href="#v-pills-connections" role="tab"
+                aria-controls="v-pills-connections" aria-selected="false"><i class="fas fa-link"></i>Connections</a>
+                <hr />
+                <a class="nav-link" id="v-pills-payment-methods-tab" data-toggle="pill" href="#v-pills-payment-methods" role="tab"
+                aria-controls="v-pills-payment-methods" aria-selected="false"><i class="far fa-credit-card"></i>Payment Methods</a>
+                <a class="nav-link" id="v-pills-transaction-history-tab" data-toggle="pill" href="#v-pills-transaction-history" role="tab"
+                aria-controls="v-pills-transaction-history" aria-selected="false"><i class="fas fa-shopping-cart"></i>Transaction History</a>
+                <hr />
+                <a class="nav-link" id="v-pills-download-games-tab" data-toggle="pill" href="#v-pills-download-games" role="tab"
+                aria-controls="v-pills-download-games" aria-selected="false"><i class="fas fa-external-link-alt"></i>Download Games</a>
+            </div>
+        </section>
+        <section class="main-content-section col p-0">
+            <div class="tab-content " id="v-pills-tabContent">
+                <!-- Account Overview -->
+                <div class="tab-pane fade show active" id="v-pills-account-overview" role="tabpanel" aria-labelledby="v-pills-account-overview-tab">
+                    <p class="h2 text-light">ACCOUNT OVERVIEW</p>
+                    <div class="row d-flex flex-wrap">
+                        <div class="overview-card col-lg-6 pl-3 pr-0 mt-4 ">
+                            <div class="col-12 p-0">
+                                <div class="card-title m-0">
+                                    REDEEM A CODE
+                                </div>
+                                <div class="card-body">
+                                    <form action="/me/giftcode" class="redeemcode-form d-flex justify-content-around" method="POST">
+                                        <input type="text" name="giftcode" class="form-control w-50" id="inputGiftCode" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off">
+                                        <button type="submit"  class="btn btn-primary btn-explore">Redeem Code</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overview-card col-lg-6 pl-3 pr-0 mt-4 ">
+                            <div class="col-12 p-0">
+                                <div class="card-title m-0 col d-flex">
+                                    <div class="col-6 p-0">
+                                        BLIZZARD BALANCE
+                                    </div>
+                                    <div class="col p-0">
+                                        <a href="#">PAYMENT METHODS<i class="fas fa-chevron-right ml-1"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container-balance">
+                                        <span class="balance">{{userBalance}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex flex-wrap">
+                        <div class="overview-card col-lg-6 pl-3 pr-0 mt-4">
+                            <div class="col-12 p-0">
+                                <div class="card-title m-0 col d-flex">
+                                    <div class="col-6 p-0">
+                                        YOUR INFORMATION
+                                    </div>
+                                    <div class="col p-0">
+                                        <a href="#">ACCOUNT DETAILS<i class="fas fa-chevron-right ml-1"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body h-50">
+                                    <div class="container-information">
+                                        <div class="row d-flex mb-3">
+                                            <div class="label col-md-4">Name</div>
+                                            <span class="col-md-8 p-0" style="font-size: 1.1rem">{{user.fullName}}</span>
+                                        </div>
+                                        <div class="row d-flex mb-3">
+                                            <div class="label col-md-4">BattleTag</div>
+                                            <span class="col-md-8 p-0" style="font-size: 1.1rem">{{user.blizzardName}}</span>
+                                        </div>
+                                        <div class="row d-flex mb-3">
+                                            <div class="label col-md-4">Email</div>
+                                            <span class="col-md-8 p-0" style="font-size: 1.1rem">{{user.email}}</span>
+                                        </div>
+                                        <div class="row d-flex">
+                                            <div class="label col-md-4">Phone</div>
+                                            <span class="col-md-8 p-0" style="font-size: 1.1rem">{{user.phoneNumber}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overview-card col-lg-6 pl-3 pr-0 mt-4">
+                            <div class="col-12 p-0">
+                                <div class="card-title m-0 col d-flex">
+                                    <div class="col-6 p-0">
+                                        SECURITY CHECKUP
+                                    </div>
+                                    <div class="col p-0">
+                                        <a href="#">SECURITY<i class="fas fa-chevron-right ml-1"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container-security h-100 w-100 d-flex row">
+                                        <div class="level-col col-md-5">
+                                            <div class="bg-radial">
+                                                <div class="inset">
+                                                    <div class="percent">
+                                                        67%
+                                                        <div class="h6">COMPLETE</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="row d-flex justify-content-center mb-3">
+                                                <div class="col-3"><i class="fas fa-check-circle"></i></div>
+                                                <div class="col-9 p-0">Email Verified</div>
+                                            </div>
+                                            <div class="row d-flex justify-content-center mb-3">
+                                                <div class="col-3"><i style="color: hsla(0,0%,100%,.2);" class="fas fa-plus-circle"></i></div>
+                                                <div class="col-9 p-0"><a href="#">Add Blizzard Authenticator</a></div>
+                                            </div>
+                                            <div class="row d-flex justify-content-center mb-3">
+                                                <div class="col-3"><i class="fas fa-check-circle"></i></div>
+                                                <div class="col-9 p-0">Phone Number Verified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex flex-wrap">
+                        <div class="overview-card col-lg-12 pl-3 pr-0 mt-4 ">
+                            <div class="col-12 p-0">
+                                <div class="card-title m-0 col d-flex">
+                                    <div class="col-6 p-0">
+                                        RECENT PURCHASES
+                                    </div>
+                                    <div class="col p-0">
+                                        <a href="#">TRANSACTION HISTORY<i class="fas fa-chevron-right ml-1"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container-transaction text-center">
+                                        <span class="transaction">You haven't placed any orders yet.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Account Details -->
+                <div class="tab-pane fade text-light" id="v-pills-account-details" role="tabpanel"
+                    aria-labelledby="v-pills-account-details-tab">Account Details</div>
+                <!-- Game & Subscriptions -->
+                <div class="tab-pane fade " id="v-pills-games-subscriptions" role="tabpanel" aria-labelledby="v-pills-games-subscriptions-tab">
+                    <p class="h2 text-light">Game & Subscriptions</p>
+                    <div class="row d-flex flex-wrap">
+                        <div class="overview-card col-lg-12 pl-3 pr-0 mt-4 ">
+                            <div class="col-12 p-0">
+                                <div class="card-title m-0">
+                                    GAME ACCOUNTS
+                                </div>
+                                {{#if user.games}}
+                                <div class="card-body">
+                                    <div class="table-container">
+                                        <table class="w-100">
+                                            <tbody>
+                                                <tr class="row-hr-box w-100">
+                                                    <td colspan="5"><hr /></td>
+                                                </tr>
+                                                {{#each user.games}}
+                                                <tr class="line-infor-games-subscriptions">
+                                                    <td class="icon-games">
+                                                        <img src="{{this.icon}}" alt="icon games">
+                                                    </td>
+                                                    <td class="name-games text-capitalize">{{this.name}}</td>
+                                                    <td class="account-status-container">
+                                                        <span>Active</span>
+                                                        <div>Account Status</div>
+                                                    </td>
+                                                    <td class="is-actived">
+                                                        <span>{{this.activatedSince}}</span>
+                                                        <div>Activated Since</div>
+                                                    </td>
+                                                    <td style="width: 100px;"></td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                {{/if}}
+                                {{#unless user.games}}
+                                    <!-- div hidden then was not item -->
+                                    <div class="table-states-container text-center">
+                                        <span>You haven't any games yet.</span>
+                                    </div> 
+                                {{/unless}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Parental Controls -->
+                <div class="tab-pane fade text-light" id="v-pills-parental-controls" role="tabpanel"
+                    aria-labelledby="v-pills-parental-controls-tab">Parental Controls</div>
+                <!-- Security -->
+                <div class="tab-pane fade text-light" id="v-pills-security" role="tabpanel"
+                    aria-labelledby="v-pills-security-tab">Security</div>
+                <!-- Privacy -->
+                <div class="tab-pane fade text-light" id="v-pills-privacy" role="tabpanel"
+                    aria-labelledby="v-pills-privacy-tab">Privacy</div>
+                <!-- Connections -->
+                <div class="tab-pane fade text-light" id="v-pills-connections" role="tabpanel"
+                    aria-labelledby="v-pills-connections-tab">Connections</div>
+                <!-- Payment Methods -->
+                <div class="tab-pane fade text-light" id="v-pills-payment-methods" role="tabpanel"
+                    aria-labelledby="v-pills-payment-methods-tab">Payment Methods</div>
+                <!-- Transaction History -->
+                <div class="tab-pane fade" id="v-pills-transaction-history" role="tabpanel" aria-labelledby="v-pills-transaction-history-tab">
+                    <p class="h2 text-light">Transaction History</p>
+                    <div class="container container-tab-controls mt-5 p-0">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">PURCHASES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">GIFT CLAIMS</a>
+                            </li>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row d-flex flex-wrap mt-4">
+                        <div class="overview-card col-lg-12 pl-3 pr-0 mt-4 ">
+                            <div class="col-12 p-0">
+                                <table class="container-table-history table m-0">
+                                    <thead>
+                                        <tr>
+                                        <th>Date</th>
+                                        <th class="history-purchase w-100">Purchase</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    {{#if transaction}}
+                                    <tbody>
+                                        {{#each transaction}}
+                                        <tr>
+                                            <td>{{this.createdAt}}</td>
+                                            <td class="text-capitalize">{{this.game}}&nbsp&nbsp({{this.version}})</td>
+                                            <td>${{formatCurrency this.price}}</td>
+                                            <td class="text-capitalize">{{this.status}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    {{/if}}
+                                    </table>
+                                    {{#unless transaction}}
+                                    <!-- div hidden then was not item -->
+                                    <div class="table-states-container text-center">
+                                        <span>You haven't placed any orders yet.</span>
+                                    </div> 
+                                    {{/unless}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Download Games -->
+                <div class="tab-pane fade" id="v-pills-download-games" role="tabpanel"
+                    aria-labelledby="v-pills-download-games-tab">Download Games</div>
+            </div>
+        </section>
+    </div>
+</main>
+{{> pay-footer}}
+
+
+{{!-- Message --}}
+{{#if message}}
+<script>
+    Swal.fire(
+        '{{message.title}}',
+        '{{message.content}}',
+        '{{message.type}}'
+    )
+</script>
+{{/if}}

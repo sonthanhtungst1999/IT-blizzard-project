@@ -1,0 +1,142 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Customer</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item "><a href="/admin/customer">Customer</a></li>
+                    <li class="breadcrumb-item active">Details Customer</li>
+                </ol>
+                <div class="container">
+                    <h2>Details Form</h2>
+                    <hr class="mt-4 mb-4"  /> 
+                    <form action="/admin/customer/{{account._id}}/edit?_method=PUT" class="row d-flex justify-content-around" method="POST">
+                        <div class="col-5">
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="blizzardName">Blizzard Name</label>
+                                    <input name="blizzardName" type="text" class="form-control" id="blizzardName" value="{{account.blizzardName}}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="blizzardBalance">Blizzard Blalance</label>
+                                    <input name="blizzardBalance" style="font-weight: 600;" type="text" class="form-control" id="blizzardBalance" value="{{account.blizzardBalance}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input name="fullName" type="text" class="form-control" id="fullName" value="{{account.fullName}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" value="{{account.email}}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input name="password" type="text" class="form-control" id="password" value="{{account.password}}">
+                            </div>                               
+                            <div class="form-row">
+                                <div class="form-group col-4">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" class="form-control" name='gender'>
+                                        <option>{{account.gender}}</option>
+                                        {{#if (checkGender 'male' account.gender)}} <option value='male'>male</option> {{/if}}
+                                        {{#if (checkGender 'female' account.gender)}} <option value='female'>female</option> {{/if}}
+                                        {{#if (checkGender 'other' account.gender)}} <option value='other'>other</option> {{/if}}
+                                    </select>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for="zip">Zip</label>
+                                    <input name="zip" type="text" class="form-control" id="zip" value="{{account.zip}}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="isAdmin">User Group</label>
+                                    <select id="isAdmin" class="form-control" name='isAdmin'>
+                                        {{#if account.isAdmin}}
+                                            <option value="true">Admin</option>
+                                            <option value="false">Customer</option>
+                                            {{else}}
+                                            <option value="false">Customer</option>
+                                            <option value="true">Admin</option>                                            
+                                        {{/if}}
+                                    </select>
+                                </div> 
+                            </div>                         
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input name="address" type="text" class="form-control" id="address" value='{{account.address}}'>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" value='{{account.phoneNumber}}'>
+                            </div>                              
+                            <div class="form-group">
+                                <label for="createdAt">Created</label>
+                                <input type="text" class="form-control" id="createdAt" value="{{account.createdAt}}" disabled>
+                            </div>                           
+                            <div class="form-group">
+                                <label for="UpdatedAt">Last Update</label>
+                                <input type="text" class="form-control" id="UpdatedAt" value='{{account.updatedAt}}' disabled>
+                            </div>          
+                             <button type="submit" class="btn btn-success btn-lg w-100 mt-4">Save</button>           
+                        </div>
+                       
+                    </form>
+
+                    <hr class="mt-4 mb-4"  /> 
+                    <h2 style="color: #212529">My Games</h2>
+
+                    <div class="row">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-dark table-hover " id="detailsTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-weight: 700; font-size:1.2rem">#</th>
+                                            <th>Blizzard Name</th>
+                                            <th>Activated Since</th>
+
+                                            <th class="text-center">Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th style="font-weight: 700; font-size:1.2rem">#</th>
+                                            <th>Blizzard Name</th>
+                                            <th>Activated Since</th>
+
+                                            <th class="text-center">Detail</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {{#each account.games}}
+                                        <tr>
+                                            <td class="" style="font-size: 1.1rem; font-weight:700">{{countIndex @index}}</td>
+                                            <td class="" style="">
+                                                <img  class="ml-1 mr-2" src="{{this.icon}}" style="max-width: 40px; vertical-align:middle;" alt="">
+                                                <span class="text-capitalize" style="font-size:1.1rem; font-weight:600">{{this.name}}</span>
+                                            </td>
+                                            <td style="">
+                                                <span class="" style="">{{this.activatedSince}}</span>
+                                            </td>
+                                            <td  class="" style="">
+                                                <button type="button" class="btn btn-danger d-block mx-auto">Remove</button>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+

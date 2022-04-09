@@ -1,0 +1,36 @@
+{
+  "name": "nienluanalphatest",
+  "version": "1.0.0",
+  "description": "Nien Luan IT",
+  "main": "index.js",
+  "scripts": {
+    "start": "node resources/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tung ITer",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cookie-parser": "^1.4.5",
+    "dateformat": "^4.5.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "method-override": "^3.0.0",
+    "mkdirp": "^1.0.4",
+    "mongoose": "^5.12.2",
+    "mongoose-currency": "^0.2.0",
+    "mongoose-delete": "^0.5.3",
+    "mongoose-slug-generator": "^1.0.4",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.5.0",
+    "nodemailer-express-handlebars": "^4.0.0",
+    "paypal-rest-sdk": "^1.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

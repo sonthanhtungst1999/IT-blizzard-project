@@ -1,0 +1,122 @@
+{{> admin-nav }}
+<div id="layoutSidenav" >
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Products</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item active">Products</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <p class="m-0">
+                            <a class="btn btn-primary ml-0" href="/admin/products/insert" role="button">
+                                Add new product
+                            </a>
+                        </p>
+                    </div>
+                    <div class="card-body container" >
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-dark" id="productsTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Logo</th>
+                                        <th>Product Name</th>
+                                        <th>Producer</th>
+                                        <th class="text-center">Action</th>
+                                        <th class="text-center">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center">Logo</th>
+                                        <th>Product Name</th>
+                                        <th>Producer</th>
+                                        <th class="text-center">Action</th>
+                                        <th class="text-center">Remove</th>
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {{#each games}}
+                                        <tr>
+                                            <td class="" style="">
+                                                <img class="ml-1 d-block mx-auto" style="display:block; width: 2.5rem; " src="{{this.category.[0]}}" alt="">
+                                            </td>
+                                            <td class="text-center text-capitalize" style="font-size: 1.35rem">
+                                                <p class="mb-0">{{this.name}}</p>
+                                            </td>                                       
+                                            <td class="text-center text-capitalize" style="font-size: 1.35rem">
+                                                <p class="m-0">{{this.isGame}}</p>
+                                            </td>
+                                            <td style="" class="">
+                                                <div style="">
+                                                    <a href="/admin/products/{{this._id}}/detail" style="line-height:135px: height:40px; white-space:nowrap" class="text-center d-block btn-explore w-75 btn m-auto ">Detail<i class="far fa-edit ml-1"></i></a>
+                                                </div>
+                                            </td>
+                                            <td colspan="1" class="" style="width: 100px;">
+                                                <button type="button" class="btn btn-danger mx-auto d-block" data-id="{{this.slug}}" data-toggle="modal" data-target="#remove-game-modal"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+{{!-- Hidden Form  banned submit --}}
+<form method="POST" name="remove-game-form"></form>
+
+
+
+<!-- Modal Banned -->
+<div class="modal fade" id="remove-game-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove Game </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will remove the game <br />
+        Are you sure about that?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-remove-game" class="btn btn-danger">Remove</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function(){
+        var GameId;
+        var btnRemoveGame = document.getElementById('btn-remove-game');
+        var removeGameForm = document.forms["remove-game-form"];
+        //When dialog confirm show
+        $('#remove-game-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) 
+            GameId = button.data('id');
+        })
+
+        btnRemoveGame.onclick = function(){
+            removeGameForm.action= '/admin/products/'+GameId+'/?_method=DELETE';
+            removeGameForm.submit();
+        }
+    })
+
+</script>

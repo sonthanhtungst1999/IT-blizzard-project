@@ -1,0 +1,117 @@
+<script src="https://www.paypal.com/sdk/js?client-id=test"></script>
+
+{{> pay-header}}
+<body style="background-image:url(/image/bg_top_detail.png); background-repeat: no-repeat;">
+    <main >
+        <div class="purchase-container container-fluid">
+            <div class="row">
+                <div class="col-6 mx-auto">
+                    <div class="container-fluid">
+                        <div class="row d-flex flex-row">
+                            <div class="payment-view col-7">
+                                <form action="/product/pay/{{game.slug}}?v={{gameVersion.name}}" class="pay-with" method="POST">
+                                    {{#if err}}
+                                    <div class="alert alert-error w-100 mb-4">
+                                        <i class="fas fa-ban ban-icon"></i>
+                                        <p class="mb-0">You don’t have enough Blizzard Balance to cover the cost of this purchase.</p>
+                                        <p>
+                                            Purchase additional
+                                            <a href="/me/setting">Blizzard Balance</a>
+                                            or
+                                            <a href="/me/setting">redeem a Blizzard Balance Card</a>
+                                            and try again.
+                                        </p>
+                                    </div>
+                                    {{/if}}
+                                    <div class="form-row">
+                                        <p class="h-6 mb-1">PAY WITH</p>
+                                        <select name="optionsPay" class="w-100 form-control">
+                                                <option value="">Please select a payment option...</option>
+                                                <option value="">PayPal</option>
+                                                <option value="">Credit or Debit card</option>
+                                                <option value="blizzardBalance">Blizzard Balance</option>
+                                                <option value="">Razer Gold</option>
+                                        </select>
+                                        <p class="purchase-help-text w-100">
+                                            By clicking "Pay Now", you agree to the
+                                            <a href="#">Blizzard’s Terms of Sale <i class="fas fa-external-link-alt"></i></a> and
+                                            <a href="#">Blizzard’s Privacy Policy <i class="fas fa-external-link-alt"></i></a>.
+                                        </p>
+                                        <div class="purchase-form-actions w-100 d-flex">
+                                            <button type="submit" class="btn btn-primary">Pay Now</button>
+                                            <button type="button" class="btn btn-primary">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="product-sumary col">
+                                <div class="product-image w-100">
+                                    <img src="{{gameVersion.image}}" alt="product-image">
+                                </div>
+                                <div class="product-sumary-content-box">
+                                    <div class="product-name-group">
+                                        <p>YOU ARE PURCHASING</p>
+                                        <p class="text-capitalize text-light">{{game.name}}®</p>
+                                    </div>
+                                    <div class="product-price-container">
+                                        <p>TOTAL</p>
+                                        {{#if gameVersion.discount}}
+                                        <div class="price text-light">${{formatCurrency gameVersion.discount}}</div>
+                                            {{else}}
+                                            <div class="price text-light">${{formatCurrency gameVersion.price}}</div>
+                                        {{/if}}
+                                    </div>
+                                    <div class="product-information mt-3">
+                                        <p class="text-light">
+                                            Need help?
+                                            <a href="#">Contact Support <i class="fas fa-external-link-alt"></i></a>
+                                        </p>
+                                        <p class="text-light">
+                                            Need help?
+                                            <a href="#">Live Chat</a>
+                                        </p>
+                                    </div>
+                                    <div class="payment-icon-container">
+                                        <div class="label-with-icon">
+                                            WE ACCEPT
+                                        </div>
+                                        <div class="accept-payment-icons">
+                                            <span class="icon-24-payment-paypal"></span>
+                                            <span class="icon-24-payment-american-express"></span>
+                                            <span class="icon-24-payment-visa"></span>
+                                            <span class="icon-24-payment-discover"></span>
+                                            <span class="icon-24-payment-razer-zgold-ewallet"></span>
+                                            <span class="icon-24-payment-diners-clubs"></span>
+                                            <span class="icon-24-payment-jcb"></span>
+                                            <span class="icon-24-payment-mastercard"></span>
+                                            <span class="icon-24-payment-battlenet-balance"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form action="/payment?g={{game.slug}}&v={{gameVersion.name}}&p={{#if gameVersion.discount}}{{gameVersion.discount}}{{else}}{{gameVersion.price}}{{/if}}" method="POST" class="purchase-form-actions w-100 text-left" >
+                                    <button type="submit" class="btn btn-primary ml-0" style="width: 240px;">Pay With Card</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {{!-- <script
+        src="https://www.paypal.com/sdk/js?client-id=AUJ69jCWQNv94Houe7UxopSM7NyKZKPpRVTBIsIrjiMjgiip2SK7hYprVgPAverTjboAk5NqNOYsY-3U&disable-funding=credit,card"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+    </script>
+    <script src="/js/payment.js"></script> --}}
+</body>
+{{> pay-footer}}
+
+{{!-- Message --}}
+{{#if message}}
+<script>
+    Swal.fire(
+        '{{message.title}}',
+        '{{message.content}}',
+        '{{message.type}}'
+    )
+</script>
+{{/if}}

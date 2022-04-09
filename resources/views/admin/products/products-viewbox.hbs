@@ -1,0 +1,307 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Products</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/list">Products</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/{{game._id}}/detail">Details</a></li>
+                    <li class="breadcrumb-item active">View Box</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <p class="m-0">
+                            <a class="btn btn-primary ml-0" data-toggle="collapse" href="#addNewView" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                View details
+                            </a>
+                            <a class="btn btn-primary ml-1" data-toggle="collapse" href="#addNewCard" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Add new Card
+                            </a>
+                        </p>
+                    </div>
+                    <div class="collapse" id="addNewView">
+                        <div class="container">
+                            <form action="/admin/products/{{game._id}}/viewbox" class="row d-flex justify-content-around" method="POST">
+                                <div class="col-5">
+                                    <h3 class="mt-4">Table view</h3>
+                                    <hr />
+                                    <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>View Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>View Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            {{#each viewTable}}
+                                            <tr style="">
+                                                <td class="text-capitalize" style="">
+                                                    <span class="" style="">{{countIndex @index}}</span>
+                                                </td>
+                                                <td class="text-capitalize" style="">
+                                                    <span class="" style="">{{this}}</span>
+                                                </td>
+                                                <td class="text-capitalize " style="">
+                                                    <span class="btn btn-danger" data-game="{{../game._id}}" data-title="{{this}}" data-toggle="modal" data-target="#remove-view-modal">Remove</span>
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-6">
+                                    <h3 class="mt-4">Add new view</h3>
+                                    <hr />
+                                    <div class="form-row">
+                                        <div class="form-group col">
+                                            <label for="">Product Name</label>
+                                            <input type="text" class="form-control" id="" value="{{game.name}}" disabled>
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="viewName">View Name</label>
+                                            <input name="viewName" style="font-weight: 600;" type="text" class="form-control" id="viewName" required>
+                                        </div>
+                                    </div>                      
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Submit</button>                        
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="collapse" id="addNewCard">
+                        <div class="container">
+                            <h2 class="mt-4">Card Form</h2>
+                            <hr class="mt-4 mb-4"  /> 
+                            <form action="/admin/products/{{game.slug}}/viewboxcard" class="row d-flex justify-content-around" method="POST" enctype="multipart/form-data">
+                                <div class="col-6">
+                                    <div class="file-upload">
+                                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Card Image</button>
+                                        <div class="image-upload-wrap">
+                                            <input name='cardImage' class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*"  required/>
+                                            <div class="drag-text">
+                                                <h3>Drag and drop a file or select add Image</h3>
+                                            </div>
+                                        </div>
+                                        <div class="file-upload-content">
+                                            <img class="file-upload-image" src="#" alt="your image" />
+                                            <div class="image-title-wrap">
+                                                <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                            </div>
+                                        </div>
+                                    </div>      
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-row">
+                                        <div class="form-group col">
+                                            <label for="viewName1">View Name</label>
+                                            <select id="viewName1" class="form-control" name='viewName' required>
+                                                <option value="">---Select---</option>
+                                                {{#each viewTable}}
+                                                <option value="{{this}}" class="text-capitalize">{{this}}</option>
+                                                {{/each}}
+                                            </select>                                   
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="cardTitle">Card Title</label>
+                                            <input name="cardTitle" style="font-weight: 600;" type="text" class="form-control" id="cardTitle" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardContent">Card Content</label>
+                                        <textarea name="cardContent" class="form-control" id="cardContent" rows="3"></textarea>
+                                    </div>                         
+                                <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Submit</button>                        
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="viewBoxTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>View</th>
+                                        <th>Card Title</th>
+                                        <th>Card</th>
+                                        <th>Action</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>View</th>
+                                        <th>Card Title</th>
+                                        <th>Card</th>
+                                        <th>Action</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {{#each game.viewBox}}
+                                        {{#each this.container}}
+                                        <tr style="">
+                                            <td class="text-capitalize" style="width:250px">
+                                                <span class="" style="">{{../this.title}}</span>
+                                            </td>
+                                            <td class="text-capitalize" style="width:350px">
+                                                <span class="" style="">{{this.title}}</span>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <span>
+                                                    <img  class="d-block mx-auto" style="width: 100px;" src="{{this.image}}" alt="">
+                                                </span>
+                                            </td>                                        
+                                            <td style="">
+                                                <a href="/admin/products/{{../../game._id}}/{{this.title}}/viewboxcard?view={{../this.title}}" class="btn btn-primary d-block mx-auto">Edit</a>
+                                            </td>
+                                            <td style="">
+                                                <button href="#" class="btn btn-danger d-block mx-auto" data-id="{{../../game.slug}}" data-viewname="{{../this.title}}" data-card="{{this.title}}" data-toggle="modal" data-target="#remove-card-modal">Remove</button>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+
+                </div>
+
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+{{!-- hidden delete card form --}}
+<form method="POST" name="remove-card-form"></form>
+
+{{!-- hidden delete view form --}}
+<form method="POST" name="remove-view-form"></form>
+
+<!-- Modal -->
+<!-- Modal remove card -->
+<div class="modal fade" id="remove-card-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove Card </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will remove card <br />
+        Are you sure about that?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-remove-card" class="btn btn-danger">Remove</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal remove view -->
+<div class="modal fade" id="remove-view-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove View Box </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will remove view box <br />
+        Are you sure about that?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-remove-view" class="btn btn-danger">Remove</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+
+    var Card;
+    var Game;
+    var viewName;
+    var View;
+    var btnRemoveCard = document.getElementById('btn-remove-card');
+    var RemoveCardForm = document.forms["remove-card-form"];
+    var btnRemoveView = document.getElementById('btn-remove-view');
+    var RemoveViewForm = document.forms["remove-view-form"];
+
+    //When dialog confirm show
+    $('#remove-card-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        Game = button.data('id');
+        Card = button.data('card');
+        viewName = button.data('viewname');
+    })
+
+    btnRemoveCard.onclick = function(){
+        RemoveCardForm.action= `/admin/products/${Game}/viewboxcard?_method=DELETE&card=${Card}&vname=${viewName}`;
+        RemoveCardForm.submit();
+    }
+
+    //when dialog remove view show
+    $('#remove-view-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        Game = button.data('game');
+        View = button.data('title');
+    })
+
+    btnRemoveView.onclick = function(){
+        RemoveViewForm.action= `/admin/products/${Game}/viewbox?_method=DELETE&view=${View}`;
+        RemoveViewForm.submit();
+    }
+})
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+
+</script>

@@ -1,0 +1,115 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Products</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/list">Products</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/{{game._id}}/detail">Details</a></li>
+                    <li class="breadcrumb-item active">Category</li>
+                </ol>
+                <div class="container">
+                    <h2>Category Form</h2>
+                    <hr class="mt-4 mb-4"  /> 
+                    <form action="/admin/products/{{game.slug}}/category?_method=PUT&image={{game.category.[0]}}" class="row d-flex justify-content-around" method="POST" enctype="multipart/form-data" autocomplete="off">
+                        <div class="col-6">
+                            <div class="file-upload">
+                                <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Update Icon Category</button>
+                                <div class="image-upload-wrap">
+                                    <input name='iconImage' class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                    <div class="drag-text">
+                                        <h3>Drag and drop a file or select add Image</h3>
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <img class="file-upload-image" src="#" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label for="imageName">Icon Path</label>
+                                <input  type="text" class="form-control"  value="{{game.category.[0]}}" disabled>
+                                <input name="iconPath" type="hidden" class="form-control" id="iconPath" value="{{game.category.[0]}}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-dark">
+                                <img src="{{game.category.[0]}}" class="p-2" style="height:75px; display:block; margin:1rem auto">   
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-8">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" class="form-control" id="productName" value="{{game.name}}" disabled>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="extendPlay">Extend Play</label>
+                                    <select id="extendPlay" class="form-control" name='extendPlay'>
+                                        <option value="true">On</option>
+                                        <option value="false" {{#unless game.extendedPlay }}selected{{/unless}}>Off</option>
+                                    </select>                                   
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="titleCategory">Title Category</label>
+                                    <input name="titleCategory" type="text" class="form-control" id="titleCategory" value="{{game.category.[1]}}" required > 
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="typeCategory">Type Category</label>
+                                    <input name="typeCategory" type="text" class="form-control" id="typeCategory" value="{{game.category.[2]}}" >
+                                </div>
+                            </div>        
+                            <button type="submit" class="btn btn-success btn-lg w-100 mt-4">Save</button>                        
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+
+<script>
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+
+</script>

@@ -1,0 +1,115 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Customer</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item active">Customer</li>
+
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        <a href="/admin/customer/banned-customer">Banned List ({{countDeleted}})</a>
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="customersTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="text-center" style="font-weight: 700; font-size:1.2rem; line-height:4.5rem ">#</th>
+                                        <th rowspan="2" class="text-center" style="line-height:4.5rem" >Blizzard Name</th>
+                                        <th rowspan="2" class="text-center" style="line-height:4.5rem" >Email</th>
+                                        <th rowspan="2" class="text-center" style="line-height:4.5rem">Last Updated</th>
+                                        <th colspan="2" style="" class="text-center">Detail</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center">Edit</th>
+                                        <th class="text-center">Ban</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each accounts}}
+                                    <tr style="line-height: 2rem;">
+                                        <td class="" style="font-size: 1.1rem; font-weight:700">{{countIndex @index}}</td>
+                                        <td class="" style="">
+                                            <span class="" style="">{{this.blizzardName}}</span>
+                                        </td>
+                                        <td class="" style="">
+                                            <span class="" style="">{{this.email}}</span>
+                                        </td>                                    
+                                        <td style="">
+                                            <span class="" style="">{{this.createdAt}}</span>
+                                        </td>
+                                        <td colspan="1" class="" style="width: 100px;">
+                                            <a href="/admin/customer/details?user={{this._id}} " class="" ><i class="fas fa-pen-square d-block m-auto " style="font-size:2.69rem"></i></a>
+                                        </td>
+                                        <td colspan="1" class="" style="width: 100px;">
+                                            <button type="button" class="btn btn-danger mx-auto d-block" data-id="{{this._id}}" data-toggle="modal" data-target="#banned-customer-modal"><i class="fas fa-ban"></i></button>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+{{!-- Hidden Form  banned submit --}}
+<form method="POST" name="banned-customer-form"></form>
+
+
+
+<!-- Modal Banned -->
+<div class="modal fade" id="banned-customer-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Banned Customer </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will banned the user <br />
+        Are you sure about that?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-banned-customer" class="btn btn-danger">Banned</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function(){
+        var CustomerId;
+        var btnBannedCustomer = document.getElementById('btn-banned-customer');
+        var bannedCustomerForm = document.forms["banned-customer-form"];
+        //When dialog confirm show
+        $('#banned-customer-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) 
+            CustomerId = button.data('id');
+        })
+
+        btnBannedCustomer.onclick = function(){
+            bannedCustomerForm.action= '/admin/customer/'+CustomerId+'/?_method=DELETE';
+            bannedCustomerForm.submit();
+        }
+
+    })
+
+</script>

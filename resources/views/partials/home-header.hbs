@@ -1,0 +1,69 @@
+
+<!-- row navbar --> 
+<header style="background-color: #0b0d12;" class="container-fluid p-0">
+    <div class="row p-0">
+        <div class="col p-0">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0 pr-0">
+                    <a class="logo-header pr-2" href="/"><img src="/image/Blizzard_Entertainment_Logo_header.png" alt="Logo" style="width:75px;"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">GAMES <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">SHOP</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">NEWS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">ESPORTS</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto account-header">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Support <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{#if user}}
+                                        {{user.blizzardName}}
+                                        {{else}}
+                                            My Account 
+                                    {{/if}}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <!-- Button trigger modal -->
+                                    {{#if user}}
+                                        <div  class="login-container pt-2 pb-2 pl-4">
+                                            <p style="color: #82c5ff" class="m-0">{{user.blizzardName}}</p>
+                                            <p style="color: rgba(255,255,255,0.5); font-size:.85rem" class="m-0">{{user.email}}</p>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        {{else}}
+                                        <div class="login-container">
+                                            <a href="/me/login" type="button" class="btn btn-primary btn-lg btn-explore">Log In</a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                    {{/if}}
+                                    <a class="dropdown-item" href="/me/setting"><i class="fas fa-cog"></i>Account Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    {{#if user}}
+                                        <a class="dropdown-item" href="/me/logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+                                        {{else}}
+                                            <a class="dropdown-item" href="/me/register"><i class="fas fa-user-plus"></i>Create a Free Account</a>
+                                    {{/if}}
+                                </div>
+                                <!-- Modal -->
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

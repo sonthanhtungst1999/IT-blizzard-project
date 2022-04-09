@@ -1,0 +1,146 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Customer</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item active">Customer</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        <a href="/admin/customer">Back</a>
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="forceDeleteTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="text-center" style="font-weight: 700; font-size:1.2rem; line-height:4.5rem ">#</th>
+                                        <th rowspan="2" class="text-center" style="line-height:4.5rem" >Blizzard Name</th>
+                                        <th rowspan="2" class="text-center" style="line-height:4.5rem" >Email</th>
+                                        <th rowspan="2" class="text-center" style="line-height:4.5rem">Last Updated</th>
+                                        <th colspan="2" style="" class="text-center">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center">Restore</th>
+                                        <th class="text-center">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each accounts}}
+                                    <tr style="line-height: 2rem;">
+                                        <td class="" style="font-size: 1.1rem; font-weight:700">{{countIndex @index}}</td>
+                                        <td class="" style="">
+                                            <span class="" style="">{{this.blizzardName}}</span>
+                                        </td>
+                                        <td class="" style="">
+                                            <span class="" style="">{{this.email}}</span>
+                                        </td>                                    
+                                        <td style="">
+                                            <span class="" style="">{{this.createdAt}}</span>
+                                        </td>
+                                        <td  class="" style="">
+                                            <button type="button" style="" class="btn btn-warning mx-auto d-block" data-id="{{this._id}}" data-toggle="modal" data-target="#restore-customer-modal"><i class="fas fa-redo"></i></button>
+                                        </td>
+                                        <td  class="" style="">
+                                            <button type="button" class="btn btn-danger mx-auto d-block removeBtn" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-customer-modal"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+{{!-- Hidden Form submit --}}
+<form method="POST" name="delete-customer-form"></form>
+<form method="POST" name="restore-customer-form"></form>
+
+<!-- Modal deleted force -->
+<div class="modal fade" id="delete-customer-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove Customer </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will delete the user permanently<br />
+        Are you sure about that?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-delete-customer" class="btn btn-danger">Remove</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal restore -->
+<div class="modal fade" id="restore-customer-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Restore Customer </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will restore the user <br />
+        Are you sure about that?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-restore-customer" class="btn btn-warning">Restore</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function(){
+        var CustomerId;
+        var btnDeleteCustomer = document.getElementById('btn-delete-customer');
+        var btnRestoreCustomer = document.getElementById('btn-restore-customer');
+        var deleteCustomerForm = document.forms["delete-customer-form"];
+        var restoreCustomerForm = document.forms["restore-customer-form"];
+        //When deleted dialog confirm show
+        $('#delete-customer-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) ;
+            CustomerId = button.data('id') ;
+        });
+        //Remove force
+        btnDeleteCustomer.onclick = function(){
+            deleteCustomerForm.action= '/admin/customer/'+CustomerId+'/force?_method=DELETE';
+            deleteCustomerForm.submit();
+        };
+
+        //When restore dialog confirm show
+        $('#restore-customer-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) ;
+            CustomerId = button.data('id');
+        });
+        //Restore Customer
+        btnRestoreCustomer.onclick = function(){
+            restoreCustomerForm.action = '/admin/customer/'+CustomerId+'/?_method=PATCH';
+            restoreCustomerForm.submit();
+        }
+
+    })
+
+</script>

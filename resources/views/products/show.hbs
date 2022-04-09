@@ -1,0 +1,169 @@
+    {{> home-header}}
+    <!-- Main Detail -->
+
+
+    <div class="product-page container-fluid p-0">
+        <header class="row p-0 d-flex justify-content-end" style="background-image: url({{game.background}});">
+            <div class="col-4 pl-0 d-flex flex-column">
+                <img class="logo" style="max-width: 300px; max-height: 180px;" src="{{game.icon}}">
+                <div class="w-100 product-section">
+                    <div class="header">
+                        <div class="product-header d-flex flex-row">
+                            <img src="{{game.category.[0]}}">
+                            <div class="name-category-container d-flex flex-column justify-content-center pl-2">
+                                <p class="h4"><strong>{{game.category.[1]}}</strong></p>
+                                <p class="h6"> {{game.category.[2]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="options">
+                        {{#each game.version}}
+                        <div class="product-option d-flex flex-row align-item-center">
+                            <img style="max-height: 70px;" src="{{this.image}}">
+                            <div class="name-price-container d-flex flex-column flex-wrap w-75">
+                                <p class="h5 m-0 text-capitalize">{{this.name}}</p>                              
+                                {{#if this.discount}}
+                                    <div class="justify-content-between d-flex flex-row">
+                                        <div class="price-details d-flex flex-wrap align-items-center">
+                                            <span class="discount">${{formatCurrency this.discount}}</span>
+                                            <span class="full">${{formatCurrency this.price}}</span>
+                                        </div>
+                                        <span class="discount-percent">-{{discountPercent this.price this.discount}}%</span>
+                                    </div>
+                                    {{else}}
+                                    <p class="h4 text-light">${{formatCurrency this.price}}</p>
+                                {{/if}}
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="actions">
+                        <div class="product-buttons">
+                            <ul>
+                                <li>
+                                    <div>
+                                        {{#if game.version}}
+                                        <a href="#" id="btn-buy" class="btn btn-primary w-100">Buy Now</a>
+                                            {{else}}
+                                            <a href="#" class="btn btn-primary w-100">Play For Free<i class="fas fa-external-link-alt"></i></a>
+                                        {{/if}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <a href="#" id="btn-gift" class="btn btn-secondary w-100">Gift</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <a href="#" class="btn btn-link w-100"><i class="far fa-heart"> Add to Wish List</i></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {{#if game.extendedPlay}}
+                        <div class="ng-star">
+                            <p>Also available on:</p>
+                            <ul>
+                                <li>
+                                    <div>
+                                        <a href="#" class="btn w-100">Nintendo® Switch <i class="fas fa-external-link-alt"></i></a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <a href="#" class="btn w-100">PlayStation® 4 <i class="fas fa-external-link-alt"></i></a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <a href="#" class="btn  w-100">Xbox® One <i class="fas fa-external-link-alt"></i></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--  -->
+        <main>
+            <!-- Media headding and requiment -->
+            <div class="media-heading-requirement-container d-flex ">
+                <div class="media-heading d-flex flex-column ">
+                    <p class="h2">{{game.media.title}}</p>
+                    <p>{{{game.media.content}}}</p>
+                </div>
+                <div class="product-requiment d-flex">
+                   <ul class="pl-4">
+                       <li>Internet connection, Blizzard® Battle.net® desktop app, and registration required to play.</li>
+                       <li>Play in any game region. </li>
+                       <li>Retailer prices may vary.</li>
+                       <li>Upgrading to the Legendary Edition will not grant any included in-game items, or credits if previously unlocked on your account.</li>
+                       <li><a href="#">System Requirements</a></li>
+                       <li><a href="#">Product Details</a></li>
+                   </ul>
+                </div>
+            </div>
+            {{#each game.viewBox}} {{!-- loop viewBox detail game --}}
+            <div class="product-feature-section container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 h3 p-3">{{this.title}}</div>
+                    <div class="col-lg-9 p-0 d-flex flex-wrap">
+                        {{#each this.container}} {{!-- loop container in viewBox --}}
+                        <div class="card m-0 col-4" style="padding:.75rem">
+                            <img class="card-img-top" src="{{this.image}}" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">{{this.title}}</h5>
+                                <p class="card-text">{{this.content}}</p>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </main>
+    </div>
+    {{> home-footer}}
+
+
+
+<script>     
+    document.addEventListener('DOMContentLoaded', function(){
+        var btnBuy = $('#btn-buy');
+        var btnGift = $('#btn-gift')
+
+        // Button buy click event
+        btnBuy.click(function(e) {
+            let versionSelected = $('.selected');
+            let versionBox = versionSelected.children('.name-price-container');
+            var versionName = versionBox.children('p:first-child').text();
+            console.log(versionName);
+            btnBuy.attr('href','/product/pay/{{game.slug}}?v='+versionName)
+            btnBuy.submit();
+        });
+
+        // Button gift click event
+        btnGift.click(function(e) {
+            let versionSelected = $('.selected');
+            let versionBox = versionSelected.children('.name-price-container');
+            var versionName = versionBox.children('p:first-child').text();
+            console.log(versionName);
+            btnGift.attr('href','/product/gift/{{game.slug}}?v='+versionName)
+            btnGift.submit();
+        });
+    })
+</script>
+
+{{!-- Message --}}
+{{#if message}}
+<script>
+    Swal.fire(
+        '{{message.title}}',
+        '{{message.content}}',
+        '{{message.type}}'
+    )
+</script>
+{{/if}}

@@ -1,0 +1,98 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Product</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item "><a href="/admin/products/list">Product</a></li>
+                    <li class="breadcrumb-item active">Insert Product</li>
+                </ol>
+                <div class="container">
+                 
+                    {{!-- action="/admin/products/insert" --}}
+                    <form  class="row d-flex justify-content-around" name="product-form-update" method="POST" autocomplete="off">
+                        <div class="col-10">
+                            <h1 class="text-center mb-4">Product Edit Overview</h1>
+                            <div class="form-row">
+                                <div class="form-group col-8">
+                                    <label for="productName">Product Name</label>
+                                    <input name="productName" type="text" class="form-control" id="productName"  value="{{game.name}}" disabled>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="producer">Producer</label>
+                                    <select id="producer" class="form-control" name='producer' required>
+                                        <option value="">---Select---</option>
+                                        {{#each producers}}
+                                        <option value="{{this.name}}" {{#if (checkViewBox this.name ../game.isGame)}}selected{{/if}} class="text-capitalize">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>                                   
+                                </div>                              
+                            </div>
+                            <div class="form-group">
+                                <label for="mediaTitle">Title Media</label>
+                                <input name="mediaTitle" type="text" class="form-control" id="mediaTitle" value="{{game.media.title}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="mediaContent">Content Media</label>
+                                <textarea name="mediaContent" class="form-control" id="mediaContent" rows="3">{{game.media.content}}</textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="custom-file col m-1">     
+                                    <input name="thumbnail" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Thumbnail</label>
+                                </div>
+                                <div class="custom-file col m-1">
+                                    <input name="logo" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Logo</label>
+                                </div>   
+                                <div class="custom-file col m-1">
+                                    <input name="background" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Background</label>
+                                </div>                             
+                            </div>                                                                     
+                        </div>
+                    </form>
+                    <div class="row d-flex justify-content-around mt-4">
+                        <div class="col-10">
+                            <div class="col p-0">
+                                <button type="submit" class="btn btn-success btn-submit-update-product btn-lg w-100 mt-4 d-block m-auto">Save</button> 
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var productFormUpdate = document.forms["product-form-update"];
+        var btnSubmitUpdateProduct = document.querySelector('.btn-submit-update-product');
+        var inputFiles = $('.custom-file-input');
+        var files = [];
+
+        btnSubmitUpdateProduct.onclick = function(e) {
+            e.preventDefault();
+            for(let i=0; i<inputFiles.length; i++) {
+                if(inputFiles[i].value) {
+                    files.push(inputFiles[i].value.split('\\').slice(2))
+                }
+            }
+            var productName = document.querySelector('#productName').value;
+            var slug = productName.toLowerCase().split(' ').join('-');
+            if(slug==''){
+                alert('Input Name Product');
+            } 
+            else {
+                productFormUpdate.action = `/admin/products/${slug}/other?_method=PUT`;
+                productFormUpdate.submit();
+            }
+        }
+    })
+</script>

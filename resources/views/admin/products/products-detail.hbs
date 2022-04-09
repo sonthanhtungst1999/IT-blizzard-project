@@ -1,0 +1,64 @@
+{{> admin-nav }}
+<div id="layoutSidenav" >
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main >
+            <div class="container-fluid">
+                <h1 class="mt-4 text-capitalize">Products</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/list">Products</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+                <div class="card mt-5 container" style="background-color:#002650; display: flex; background-image: url(/image/background-generic.jpg); background-repeat: no-repeat; background-position: top center;">
+                    <div class="card-header" style="color:#fff">
+                        <h2 class="text-capitalize ml-3">{{game.name}}</h2>
+                    </div>
+                    <div class="card-body row" >
+                        <div class="col-4">
+                            <div class="card card-item mb-4" style="width:17.67rem; border:none; margin:0 0.7rem; border-radius:unset;">
+                                <img class="card-img-top" src="{{game.image}} " alt="Card image cap" style="border-radius:unset;">
+                            </div>
+                        </div>
+                        <div class="col-7 main-content-section">
+                                <div class="overview-card">
+                                    <div class="col p-0">
+                                        <div class="card-title m-0 col d-flex">
+                                            <div class="col-8 p-0">
+                                                PRODUCT INFORMATION
+                                            </div>
+                                            <div class="col p-0">
+                                                <a href="/admin/products/list">BACK<i class="fas fa-chevron-right ml-1"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body h-50">
+                                            <div class="container-information">
+                                                <div class="row d-flex mb-3">
+                                                    <div class="label col-md-4">Version</div>
+                                                    <a href="/admin/products/{{game._id}}/version" class="col-md-8 p-0 btn btn-explore" style="font-size: 1.1rem">Version Details ({{#if (checkViewBox countVersion 0)}}Free Trial{{else}}{{countVersion}}{{/if}})</a>
+                                                </div>
+                                                <div class="row d-flex mb-3">
+                                                    <div class="label col-md-4">View Content</div>
+                                                    <a href="/admin/products/{{game._id}}/viewbox" class="col-md-8 p-0 btn btn-explore" style="font-size: 1.1rem">View Box ({{countViewBox}})</a>
+                                                </div>
+                                                <div class="row d-flex mb-3">
+                                                    <div class="label col-md-4">Category</div>
+                                                    <a href="/admin/products/{{game._id}}/category" class="col-md-8 p-0 btn btn-explore" style="font-size: 1.1rem">Update</a>
+                                                </div>
+                                                <div class="row d-flex">
+                                                    <div class="label col-md-4">Other</div>
+                                                    <a href="/admin/products/{{game._id}}/other" class="col-md-8 p-0 btn btn-explore" style="font-size: 1.1rem">Setting</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+

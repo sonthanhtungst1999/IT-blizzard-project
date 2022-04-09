@@ -1,0 +1,80 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Customer</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item "><a href="/admin/transaction">Transaction</a></li>
+                    <li class="breadcrumb-item active">Transaction Edit</li>
+                </ol>
+                <div class="container">
+                    <h2>Transaction Form</h2>
+                    <hr class="mt-4 mb-4"  /> 
+                    <form action="/admin/transaction/{{transaction._id}}?_method=PUT" class="row d-flex justify-content-around" method="POST">
+                        <div class="col-5">
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="Game">Game</label>
+                                    <input name="Game" type="text" class="form-control" id="Game" value="{{transaction.game}}" disabled>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="code">Private Code</label>
+                                    <input name="code" style="font-weight: 600;" type="text" class="form-control" id="code" value="{{transaction.code}}" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="owner">Owner</label>
+                                <input name="owner" type="text" class="form-control" id="owner" value="{{transaction.owner}}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Slug</label>
+                                <input type="text" class="form-control" id="" value="{{transaction.slug}}" disabled>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="version">Version</label>
+                                    <input name="version" type="text" class="form-control" id="version" value="{{transaction.version}}" disabled>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="price">Price</label>
+                                    <input name="price" style="font-weight: 600;" type="text" class="form-control" id="price" value="{{formatCurrency transaction.price}}$" disabled>
+                                </div>
+                            </div>                                                   
+                        </div>
+                        <div class="col-6">                           
+                            <div class="form-group">
+                                <label for="createdAt">Created</label>
+                                <input type="text" class="form-control" id="createdAt" value="{{transaction.createdAt}}" disabled>
+                            </div>                           
+                            <div class="form-group">
+                                <label for="UpdatedAt">Last Update</label>
+                                <input type="text" class="form-control" id="UpdatedAt" value='{{transaction.updatedAt}}' disabled>
+                            </div> 
+                            <div class="form-row">
+                                <div class="form-group col-8">
+                                    <label for="zip">Transaction ID</label>
+                                    <input name="transactionID" type="text" class="form-control" id="transactionID" value="{{transaction._id}}" disabled>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="isAdmin">Status</label>
+                                    <select id="isAdmin" class="form-control" name='status'>
+                                        <option value='Complete'>Complete</option> 
+                                        <option value='Pending' {{#if (checkViewBox 'Pending' transaction.status)}}selected{{/if}}>Pending</option>
+                                    </select>
+                                </div> 
+                            </div>         
+                             <button type="submit" class="btn btn-success btn-lg w-100 mt-4">Save</button>           
+                        </div>
+     
+                    </form>
+
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+

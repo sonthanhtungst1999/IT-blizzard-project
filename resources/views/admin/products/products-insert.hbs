@@ -1,0 +1,114 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Product</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item "><a href="/admin/products/list">Products</a></li>
+                    <li class="breadcrumb-item active">Add Product</li>
+                </ol>
+                <div class="container">
+                    <hr class="mt-4 mb-4"  /> 
+                    {{!-- action="/admin/products/insert" --}}
+                    <form  class="row d-flex justify-content-around" name="insert-product-form" method="POST" autocomplete="off" enctype="multipart/form-data">
+                        <div class="col-8">
+                            <h1 class="text-center mb-4">Product Overview</h1>
+                            <div class="form-row">
+                                <div class="form-group col-7">
+                                    <label for="productName">Product Name</label>
+                                    <input name="productName" type="text" class="form-control" id="productName" required>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for="producer">Producer</label>
+                                    <select id="producer" class="form-control" name='producer' required>
+                                        <option value="">---Select---</option>
+                                        {{#each producers}}
+                                        <option value="{{this.name}}" class="text-capitalize">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>                                   
+                                </div>                              
+                                <div class="form-group col">
+                                    <label for="extendPlay">Extend Play</label>
+                                    <select id="extendPlay" class="form-control" name='extendPlay'>
+                                        <option value="true">On</option>
+                                        <option value="false" selected>Off</option>
+                                    </select>                                   
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mediaTitle">Title Media</label>
+                                <input name="mediaTitle" type="text" class="form-control" id="mediaTitle" >
+                            </div>
+                            <div class="form-group">
+                                <label for="mediaContent">Content Media</label>
+                                <textarea name="mediaContent" class="form-control" id="mediaContent" rows="3"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col mb-1">
+                                    <input name="titleCategory" type="text" class="form-control" id="titleCategory" placeholder="Title Category">
+                                </div>
+                                <div class="form-group col mb-1">
+                                    <input name="typeCategory" type="text" class="form-control" id="typeCategory" placeholder="Type Category">
+                                </div>                              
+                            </div> 
+                            <div class="form-row">
+                                <div class="custom-file col m-1">     
+                                    <input name="thumbnail" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Thumbnail</label>
+                                </div>
+                                <div class="custom-file col m-1">
+                                    <input name="logo" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Logo</label>
+                                </div>                                
+                            </div>  
+                            <div class="form-row">
+                                <div class="custom-file col m-1">     
+                                    <input name="category" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Category</label>
+                                </div>
+                                <div class="custom-file col m-1">
+                                    <input name="background" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Background</label>
+                                </div>                                
+                            </div>                                                     
+                                             
+                        </div>
+                    </form>
+                    <div class="row d-flex justify-content-around mt-4">
+                        <div class="col-8">
+                            <div class="col p-0">
+                                <button type="submit" class="btn btn-primary btn-submit-insert-product btn-lg w-100 mt-4 d-block m-auto">Insert</button> 
+                            </div>
+                        </div>
+                    </div>
+                     
+                    
+                    <hr class="mt-4 mb-4"  />  
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var insertProductForm = document.forms["insert-product-form"];
+        var btnSubmitInsertProduct = document.querySelector('.btn-submit-insert-product');
+
+        btnSubmitInsertProduct.onclick = function(e) {
+            var productName = document.querySelector('#productName').value;
+            var slug = productName.toLowerCase().split(' ').join('-');
+            if(slug==''){
+                alert('Input Name Product');
+            } else {
+                insertProductForm.action = '/admin/products/insert/'+slug;
+                insertProductForm.submit();
+            }
+        }
+    })
+</script>

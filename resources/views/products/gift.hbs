@@ -1,0 +1,67 @@
+{{> pay-header}}
+<body style="background-image:url(/image/bg_top_detail.png); background-repeat: no-repeat;">
+    <main>
+       <div class="purchase-container container-fluid">
+           <div class="row">
+               <div class="col-6 mx-auto">
+                   <div class="container-fluid">
+                       <div class="row d-flex flex-row">
+                           <div class="payment-view col-7">
+                            <p class="h2 text-light">Active Account</p>
+                               <form action="/product/gift/{{game.slug}}?v={{gameVersion.name}}"  class="pay-with" method="POST">
+                                    <input name="iconGame" type="hidden" value="{{game.category.[0]}}">
+                                    <div class="form-row mt-4">
+                                        <label for="inputGiftCode" class="h-6 mb-1">ENTER YOUR CODE</label>
+                                        <input name="code" type="text" class="form-control" id="inputGiftCode" placeholder="Gift code" autocomplete="off">
+                                        <p class="purchase-help-text w-100">
+                                            By clicking "Active Now", you agree to the
+                                            <a href="#">Blizzard’s Terms of Sale <i class="fas fa-external-link-alt"></i></a> and
+                                            <a href="#">Blizzard’s Privacy Policy <i class="fas fa-external-link-alt"></i></a>.
+                                        </p>
+                                        <div class="purchase-form-actions w-100 d-flex">
+                                            <button type="submit" class="btn btn-primary">Active Now</button>
+                                            <button type="button" class="btn btn-primary">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                           </div>
+                           <div class="product-sumary col">
+                               <div class="product-image w-100">
+                                    <img src="{{gameVersion.image}}" alt="product-image">
+                               </div>
+                               <div class="product-sumary-content-box">
+                                    <div class="product-name-group">
+                                        <p>YOU ARE PURCHASING</p>
+                                        <p class="text-capitalize text-light">{{game.name}}®</p>
+                                    </div>
+                                    <div class="product-information mt-3">
+                                        <p class="text-light">
+                                            Need help?
+                                            <a href="#">Contact Support <i class="fas fa-external-link-alt"></i></a>
+                                        </p>
+                                        <p class="text-light">
+                                            Need help?
+                                            <a href="#">Live Chat</a>
+                                        </p>
+                                    </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </main>
+</body>
+{{> pay-footer}}
+
+{{!-- Message --}}
+{{#if message}}
+<script>
+    Swal.fire(
+        '{{message.title}}',
+        '{{message.content}}',
+        '{{message.type}}'
+    )
+</script>
+{{/if}}

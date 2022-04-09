@@ -1,0 +1,75 @@
+<div class="register-container">
+    <div class="container">
+        <div style="height: 100vh;" class="row d-flex justify-content-center">
+            <div class="col-sm-12 col-md-10 col-lg-8 d-flex flex-column justify-content-center align-item-center">
+                <form class="register-form" method="POST">
+                    <img class="mx-auto d-block p-3 mb-4" style="width: 240px;" src="/image/blizzard-entertainment.svg">
+                    <div class="form-row">
+                      <div class="form-group col-12 col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input name="email" type="email" class="form-control" id="inputEmail4" placeholder="Email"  required>
+                      </div>
+                      <div class="form-group col-12 col-md-6">
+                        <label for="inputPassword4">Password</label>
+                        <input name="password" type="password" class="form-control" id="inputPassword4" placeholder="Password" required>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-8">
+                        <label for="inputFullName">Full Name</label>
+                        <input name="fullName" type="text" class="form-control" id="inputFullName" placeholder="First and Last name"  required>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputBlizzardName">Blizzard Name</label>
+                        <input name="blizzardName" type="text" class="form-control" id="inputFullName" placeholder="Blizzard Name"  required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputAddress">Address</label>
+                      <input name="address" type="text" class="form-control" id="inputAddress" placeholder="Address" required>
+                    </div>
+
+
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputPhoneNumber">Phone Number</label>
+                        <input name="phoneNumber" type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone"  required>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputState">Gender</label>
+                        <select name="gender" id="inputState" class="form-control bg-dark">
+                          <option selected value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <input name="zip" type="text" class="form-control" id="inputZip" >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                            Accept license
+                        </label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn-explore btn w-100 mb-3">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Message --}}
+{{#if message}}
+<script>
+    Swal.fire(
+        '{{message.title}}',
+        '{{message.content}}',
+        '{{message.type}}'
+    )
+</script>
+{{/if}}

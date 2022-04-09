@@ -1,0 +1,219 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Products</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/list">Products</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/{{game._id}}/detail">Details</a></li>
+                    <li class="breadcrumb-item active">Version</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Table Version
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Cost</th>
+                                        <th>Discount</th>
+                                        <th>Action</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Cost</th>
+                                        <th>Discount</th>
+                                        <th>Action</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {{#each game.version}}
+                                    <tr style="">
+                                        <td class="text-capitalize" style="">
+                                            <span class="" style="">{{this.name}}</span>
+                                        </td>
+                                        <td class="text-capitalize">
+                                            <span>
+                                                <img  class="d-block mx-auto" style="width: 75px;" src="{{this.image}}" alt="">
+                                            </span>
+                                        </td>                                        
+                                        <td style="">
+                                            <p class="h4 text-center" style="font-size: 1.5rem; font-weight: 500 !important; line-height: 1.2; margin: 0;">${{formatCurrency this.price}}</p>
+                                        </td>
+                                        {{#if this.discount}}
+                                        <td class="" style="width:250px">
+                                            <span class="h4 text-center ml-4" style="">${{formatCurrency this.discount}} </span>
+                                            <span class="h4 text-center discount-percent ml-5" style="">-{{discountPercent this.price this.discount}}%</span>
+                                        </td>
+                                            {{else}}
+                                            <td style="">
+                                                <p class="text-center h5" style="color:red">OFF</p>
+                                            </td>
+                                        {{/if}}
+                                        <td style="">
+                                            <a href="/admin/products/{{../game._id}}/{{this.name}}/edit" class="btn btn-primary d-block mx-auto">Edit</a>
+                                        </td>
+                                        <td style="">
+                                            <button href="#" class="btn btn-danger d-block mx-auto" data-id="{{../game._id}}" data-version="{{this._id}}" data-toggle="modal" data-target="#remove-version-modal">Remove</button>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+
+                </div>
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#addVersionForm" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Add new version 
+                    </a>
+                </p>
+                <div class="collapse" id="addVersionForm">
+                    <div class="container">
+                        <h2>Version Form</h2>
+                        <hr class="mt-4 mb-4"  /> 
+                        <form action="/admin/products/{{game.slug}}/version" class="row d-flex justify-content-around" method="POST" enctype="multipart/form-data">
+                            <div class="col-6">
+                                <div class="file-upload">
+                                    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+                                    <div class="image-upload-wrap">
+                                        <input name='versionImage' class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                        <div class="drag-text">
+                                            <h3>Drag and drop a file or select add Image</h3>
+                                        </div>
+                                    </div>
+                                    <div class="file-upload-content">
+                                        <img class="file-upload-image" src="#" alt="your image" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                        </div>
+                                    </div>
+                                </div>      
+                            </div>
+                            <div class="col-6">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label for="productName">Product Name</label>
+                                        <input type="text" class="form-control" id="productName" value="{{game.name}}" disabled>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="versionName">Version Name</label>
+                                        <input name="versionName" style="font-weight: 600;" type="text" class="form-control" id="versionName" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label for="cost">Cost</label>
+                                        <input name="cost" type="text" class="form-control" id="cost" placeholder="$xxx.xx" required > 
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="discount">Discount</label>
+                                        <input name="discount" type="text" class="form-control" id="discount" placeholder="Discount is not require">
+                                    </div>
+                                </div>                          
+                               <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Submit</button>                        
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+{{!-- hidden delete version form --}}
+<form method="POST" name="remove-version-form"></form>
+<!-- Modal -->
+<!-- Modal Banned -->
+<div class="modal fade" id="remove-version-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove Version </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will remove version <br />
+        Are you sure about that?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-remove-version" class="btn btn-danger">Remove</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+
+    var Version;
+    var Game;
+    var btnRemoveVersion = document.getElementById('btn-remove-version');
+    var RemoveVersionForm = document.forms["remove-version-form"];
+    //When dialog confirm show
+    console.log(btnRemoveVersion)
+    console.log(RemoveVersionForm)
+    $('#remove-version-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        Game = button.data('id');
+        Version = button.data('version')
+    })
+
+    btnRemoveVersion.onclick = function(){
+        RemoveVersionForm.action= `/admin/products/${Game}/version?_method=DELETE&v=${Version}`;
+        RemoveVersionForm.submit();
+    }
+})
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+
+</script>

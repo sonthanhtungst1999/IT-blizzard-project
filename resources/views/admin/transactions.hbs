@@ -1,0 +1,81 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Transaction</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item active">Transaction</li>
+
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Transaction History
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="transactionsTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Owner</th>
+                                        <th>Game</th>
+
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Owner</th>
+                                        <th>Game</th>
+
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {{#each transactions}}
+                                    <tr>
+                                        <td>{{countIndex @index}}</td>
+                                        <td class="" style="">
+                                            <span class="" style="">{{this.owner}}</span>
+                                        </td>
+                                        <td class="text-capitalize">
+                                            <span class="" style="">{{this.game}} ({{this.version}})</span>
+                                        </td>                                       
+                                        {{!-- <td style="">
+                                            <span class="" style="">{{this.code}}</span>
+                                        </td>
+                                        <td class="text-center" style="font-size:1.2rem; font-weight:500; color:#6cdb00">
+                                            <span class="" style="">${{formatCurrency this.price}}</span>
+                                        </td> --}}
+                                        <td style="">
+                                            <span class="" style="">{{this.createdAt}}</span>
+                                        </td>
+                                        <td style="">
+                                            <span class="" style="">{{this.status}}</span>
+                                        </td>
+                                        <td style="">
+                                            <a href="/admin/transaction/{{this._id}}">Detail</a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+

@@ -1,0 +1,104 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Products</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/list">Products</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/{{game._id}}/detail">Details</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/{{game._id}}/viewbox">View Box</a></li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+                <div class="container">
+                    <h2>View Form</h2>
+                    <hr class="mt-4 mb-4"  /> 
+                    <form action="/admin/products/{{game.slug}}/version?_method=PUT&image={{version.image}}" class="row d-flex justify-content-around" method="POST" enctype="multipart/form-data" autocomplete="off">
+                        <div class="col-6">
+                            <div class="file-upload">
+                                <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Update Image Version</button>
+                                <div class="image-upload-wrap">
+                                    <input name='versionImage' class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                    <div class="drag-text">
+                                        <h3>Drag and drop a file or select add Image</h3>
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <img class="file-upload-image" src="#" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                    </div>
+                                </div>
+                            </div>      
+                        </div>
+                        <div class="col-6">
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" class="form-control" id="productName" value="{{game.name}}" disabled>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="versionName">Card Title</label>
+                                    <input name="versionName" style="font-weight: 600;" type="text" class="form-control" id="versionName" value="{{version.name}}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardContent">Card Content</label>
+                                <textarea class="form-control" id="cardContent" rows="3"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="imageName">Image Path</label>
+                                    <input name="imageName" type="text" class="form-control" id="imageName" value="{{version.image}}" disabled>
+                                    <input name="imageName" type="hidden" class="form-control" id="imageName" value="{{version.image}}">
+                                </div>
+                            </div>                        
+                            <button type="submit" class="btn btn-success btn-lg w-100 mt-4">Save</button>                        
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+
+<script>
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+
+</script>

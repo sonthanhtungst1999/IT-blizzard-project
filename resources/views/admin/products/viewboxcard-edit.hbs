@@ -1,0 +1,111 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Products</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/list">Products</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/{{game._id}}/detail">Detail</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/products/{{game._id}}/viewbox">View Box</a></li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+                <div class="container">
+                    <h2>Card Form</h2>
+                    <hr class="mt-4 mb-4"  /> 
+                    <form action="/admin/products/{{game.slug}}/viewboxcard?_method=PUT&image={{viewEdit.image}}" class="row d-flex justify-content-around" method="POST" enctype="multipart/form-data">
+                        <div class="col-6">
+                            <div class="file-upload">
+                                <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Update Card Image</button>
+                                <div class="image-upload-wrap">
+                                    <input name='cardImage' class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*"/>
+                                    <div class="drag-text">
+                                        <h3>Drag and drop a file or select add Image</h3>
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <img class="file-upload-image" src="#" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                    </div>
+                                </div>
+                            </div>      
+                        </div>
+                        <div class="col-6">
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="viewName1">View Name</label>
+                                    <select id="viewName1" class="form-control" name='viewName' required>
+                                        {{#each viewTable}}
+                                        <option value="{{this}}" class="text-capitalize" {{#if (checkViewBox this ../view) }}selected{{/if}}>{{this}}</option>
+                                        {{/each}}
+                                    </select>                                   
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cardTitle">Card Title</label>
+                                    <input name="cardTitle" style="font-weight: 600;" type="text" class="form-control" value="{{viewEdit.title}}" id="cardTitle">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardContent">Card Content</label>
+                                <textarea name="cardContent" class="form-control" id="cardContent" rows="3">{{viewEdit.content}}</textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="">Image Path</label>
+                                    <input name="" type="text" class="form-control" id="" value="{{viewEdit.image}}" disabled>
+                                    <input name="cardImage" type="hidden" class="form-control" id="cardImage" value="{{viewEdit.image}}">
+                                </div>
+                            </div>
+                            <img src="{{viewEdit.image}}" style="width:200px; display:block; margin:0 auto" alt="">    
+                            <input type="hidden" name="hiddenViewName" value="{{view}}"> {{!-- Hidden input ViewName --}}
+                            <input type="hidden" name="hiddenCardTitle" value="{{viewEdit.title}}"> {{!-- Hidden input ViewName --}}
+                        <button type="submit" class="btn btn-success btn-lg w-100 mt-4">Save</button>                        
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
+
+<script>
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+
+</script>

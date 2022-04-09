@@ -1,0 +1,82 @@
+{{> admin-nav }}
+<div id="layoutSidenav">
+    {{> admin-sidebar }}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Customer</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item "><a href="/admin/customer">Customer</a></li>
+                    <li class="breadcrumb-item active">Insert Customer</li>
+                </ol>
+                <div class="container">
+                    <h2 class="mt-4">Insert Form</h2>
+                    <hr class="mt-4 mb-4"  /> 
+                    <form action="/admin/customer/insert" class="row d-flex justify-content-around" method="POST" autocomplete="off">
+                        <div class="col-5">
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="blizzardName">Blizzard Name</label>
+                                    <input name="blizzardName" type="text" class="form-control" id="blizzardName" required>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="blizzardBalance">Blizzard Blalance</label>
+                                    <input name="blizzardBalance" style="font-weight: 600;" type="text" class="form-control" id="blizzardBalance">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input name="fullName" type="text" class="form-control" id="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input name="email" type="text" class="form-control" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input name="password" type="password" class="form-control" id="password" required>
+                            </div>                               
+                      
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input name="address" type="text" class="form-control" id="address" >
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" >
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-4">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" class="form-control" name='gender'>
+                                        <option value='male'>male</option> 
+                                        <option value='female'>female</option>
+                                        <option value='other'>other</option> 
+                                    </select>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for="zip">Zip</label>
+                                    <input name="zip" type="text" class="form-control" id="zip">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="isAdmin">User Group</label>
+                                    <select id="isAdmin" class="form-control" name='isAdmin'>
+                                        <option value="false">Customer</option>
+                                        <option value="true">Admin</option>                                            
+                                    </select>
+                                </div> 
+                            </div>   
+                             <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Submit</button>           
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </main>
+        {{> admin-footer }}
+    </div>
+</div>
+
