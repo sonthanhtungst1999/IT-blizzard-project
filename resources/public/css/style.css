@@ -475,6 +475,7 @@ footer div div a img {
 
 .register-form input[type=text],
 .register-form input[type=email],
+.register-form input[type=number],
 .register-form input[type=password],
 .register-form select,
 .register-form select option{

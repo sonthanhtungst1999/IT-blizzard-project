@@ -45,7 +45,7 @@ class PaymentController {
           "payment_method": "paypal"
       },
       "redirect_urls": {
-          "return_url": `${process.env.SERVER_URL}:${projectt.env.PORT}/payment/success`,
+          "return_url": `${process.env.SERVER_URL}:${process.env.PORT}/payment/success`,
           "cancel_url": `${req.headers.referer}`
       },
       "transactions": [{
