@@ -45,8 +45,8 @@ class PaymentController {
           "payment_method": "paypal"
       },
       "redirect_urls": {
-          "return_url": "http://localhost:8080/payment/success",
-          "cancel_url": "http://localhost:8080/cancel"
+          "return_url": `http://localhost:5000/payment/success`,
+          "cancel_url": `${req.headers.referer}`
       },
       "transactions": [{
           "item_list": {

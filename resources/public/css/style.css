@@ -181,7 +181,7 @@ header .navbar .nav-link{
 
 .modal-content input:focus,
 .modal-content select:focus {
-    border: 1px solid#007bc6 !important;
+    border: 1px solid #007bc6 !important;
     box-shadow: unset;
     color: #fff !important;
 }
@@ -487,7 +487,7 @@ footer div div a img {
 
 
 .register-form input:focus,.register-form select:focus    {
-    border: 1px solid#007bc6 !important;
+    border: 1px solid #007bc6 !important;
     box-shadow: unset;
     color: #fff !important;
 }
@@ -547,7 +547,7 @@ input::placeholder {
 }
 
 .login-form input:focus,.login-form select:focus    {
-    border: 1px solid#007bc6 !important;
+    border: 1px solid #007bc6 !important;
     box-shadow: unset;
     color: #fff !important;
 }
@@ -1091,7 +1091,7 @@ input::placeholder {
 
 .pay-with select:focus {
     background-color: #00000080;
-    border: 1px solid#007bc6 !important;
+    border: 1px solid #007bc6 !important;
     box-shadow: unset;
     color: #fff;
 }
@@ -1310,7 +1310,7 @@ input::placeholder {
 }
 .pay-with .form-row input[type=text]:focus {
     background-color: #00000080;
-    border: 1px solid#007bc6 !important;
+    border: 1px solid #007bc6 !important;
     box-shadow: unset;
     color: #fff;
 }
@@ -1459,7 +1459,7 @@ input::placeholder {
 }
 .overview-card .card-body input[type=text]:focus {
     background-color: #00000080;
-    border: 1px solid#007bc6 !important;
+    border: 1px solid #007bc6 !important;
     box-shadow: unset;
     color: #fff;  
 }

@@ -72,6 +72,18 @@ class UsersController {
 
     //[POST] me/register
     handleRegister(req, res, next){
+        if(typeof req.body.zip != 'number') {
+            //Sweet alert message
+            req.session.message = {
+                type: process.env.SWAL_ERROR,
+                title: 'Opps...!',
+                content: 'Zip input must be a number'
+            }
+            res.redirect('back');
+            return;
+        }
+        //validation input zip isNumber
+
         const account = new Account({
             fullName: req.body.fullName,
             blizzardName: req.body.blizzardName,

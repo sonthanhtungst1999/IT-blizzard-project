@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 
 async function connect() {
     try {
-        await mongoose.connect(`mongodb+srv://sonthanhtungst:01246155208Tt@it-blizzard-project.cmro1.mongodb.net/IT-blizzard-project?retryWrites=true&w=majority`, {
+        await mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@it-blizzard-project.cmro1.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
