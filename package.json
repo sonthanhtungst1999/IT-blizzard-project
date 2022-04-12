@@ -4,7 +4,7 @@
   "description": "Nien Luan IT",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon resources/app.js",
+    "start": "node resources/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tung ITer",
