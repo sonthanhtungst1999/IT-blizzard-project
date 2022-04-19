@@ -150,7 +150,8 @@ class ProductsController {
                             //Step 1
 
                             let transporter = nodemailer.createTransport({
-                                service: 'gmail',
+                                pool: true,
+                                service: 'Gmail',
                                 auth: {
                                     type: 'OAuth2',
                                     user: process.env.NM_USERNAME,

@@ -159,7 +159,7 @@ class PaymentController {
         let nameGame = game.name.toUpperCase();
         let versionGame = version_game.toUpperCase();
         let mailOptions = {
-            from: `${process.env.NM_USERNAME}`,
+            from: `Blizzard Entertainment clone <nodejsb1706778@gmail.com>`,
             to: user.email,
             subject: 'Blizzard - Successful Transaction !!! ('+nameGame+ ':  '+versionGame+')',
             template: 'nodeMailer',
