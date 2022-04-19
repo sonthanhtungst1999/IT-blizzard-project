@@ -1,5 +1,6 @@
 const Game = require('../models/Games');
 const Account = require('../models/Accounts');
+const { google } = require('googleapis');
 const Transaction = require('../models/Transactions');
 const { mongooseToObject } = require('../../util/mongoose');
 const { multipleMongooseToObject }    = require('../../util/mongoose');
@@ -134,16 +135,31 @@ class ProductsController {
                         Account.updateOne({_id: user.sub}, {blizzardBalance: accountNewPrice*100}),
                         transaction.save()
                     ])
-                        .then(() => {
+                        .then(async () => {
+
+                            //Setup oAuth2 to send mail
+                            const CLIENT_ID = process.env.CLIENT_ID
+                            const CLIENT_SECRET = process.env.CLIENT_SECRET
+                            const REDIRECT_URI = process.env.REDIRECT_URI
+                            const REFRESH_TOKEN = process.env.REFRESH_TOKEN
+                            const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+                            oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
+                            const accessToken = await oAuth2Client.getAccessToken()
+                            
                             //Send Mail 
                             //Step 1
+
                             let transporter = nodemailer.createTransport({
                                 service: 'gmail',
                                 auth: {
+                                    type: 'OAuth2',
                                     user: process.env.NM_USERNAME,
-                                    pass: process.env.NM_PASSWORD
+                                    clientId: CLIENT_ID,
+                                    clientSecret: CLIENT_SECRET,
+                                    refreshToken: REFRESH_TOKEN,
+                                    accessToken: accessToken
                                 }
-                            });
+                              });
                             var options = {
                                 viewEngine: {
                                     extname: '.hbs',
@@ -160,7 +176,7 @@ class ProductsController {
                             let nameGame = game.name.toUpperCase();
                             let versionGame = req.query.v.toUpperCase();
                             let mailOptions = {
-                                from: 'nodejsb1706778@gmail.com',
+                                from: 'Blizzard Entertainment clone <nodejsb1706778@gmail.com>',
                                 to: account.email,
                                 subject: 'Blizzard - Successful Transaction !!! ('+nameGame+ ':  '+versionGame+')',
                                 template: 'nodeMailer',

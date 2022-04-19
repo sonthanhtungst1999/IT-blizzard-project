@@ -8,6 +8,7 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
 var paypal = require('paypal-rest-sdk');
+const { google } = require('googleapis');
 
 require('dotenv').config({ path: './resources/.env' }) // Environments Place
 
@@ -121,13 +122,26 @@ class PaymentController {
         });
         await transaction.save(); //Save transaction on database
 
+            //Setup oAuth2 to send mail
+            const CLIENT_ID = process.env.CLIENT_ID
+            const CLIENT_SECRET = process.env.CLIENT_SECRET
+            const REDIRECT_URI = process.env.REDIRECT_URI
+            const REFRESH_TOKEN = process.env.REFRESH_TOKEN
+            const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+            oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
+            const accessToken = await oAuth2Client.getAccessToken()
+
         //Send mail
         //step 1
         let transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
-              user: process.env.NM_USERNAME,
-              pass: process.env.NM_PASSWORD
+            type: 'OAuth2',
+            user: process.env.NM_USERNAME,
+            clientId: CLIENT_ID,
+            clientSecret: CLIENT_SECRET,
+            refreshToken: REFRESH_TOKEN,
+            accessToken: accessToken
           }
         });
         var options = {
@@ -145,7 +159,7 @@ class PaymentController {
         let nameGame = game.name.toUpperCase();
         let versionGame = version_game.toUpperCase();
         let mailOptions = {
-            from: 'nodejsb1706778@gmail.com',
+            from: `${process.env.NM_USERNAME}`,
             to: user.email,
             subject: 'Blizzard - Successful Transaction !!! ('+nameGame+ ':  '+versionGame+')',
             template: 'nodeMailer',
